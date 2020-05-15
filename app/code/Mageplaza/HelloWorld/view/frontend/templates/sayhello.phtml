@@ -1,0 +1,91 @@
+<?php
+
+/**
+ * @var \Mageplaza\HelloWorld\Block\Display $block
+ */
+
+
+
+?>
+
+
+<?php
+        define('DateTime', 'DateTime'); 
+        define('CurrencyCode', 'CurrencyCode'); 
+        define('Exrate', 'Exrate'); 
+        define('Source', 'Source'); 
+        define('CurrencyName', 'CurrencyName'); 
+        define('Buy', 'Buy'); 
+        define('Transfer', 'Transfer'); 
+        define('Sell', 'Sell'); 
+
+        $ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, "https://portal.vietcombank.com.vn/Usercontrols/TVPortal.TyGia/pXML.aspx?b=68");
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+		$xmlstr = curl_exec($ch);
+		curl_close($ch);
+        $xml = simplexml_load_string($xmlstr);
+
+        
+        $json = json_encode($xml);
+        $array = json_decode($json, true);
+		echo '<h1>Tỉ giá chuyển đổi ngoại tệ</h1>';
+		echo $xml->DateTime . "<br>"; 
+
+        
+?>
+<style>
+.bor_ctd {
+	border : 2px solid #000000;
+	border-collapse : collapse;
+	width: 600px;
+	padding : 0px;
+	
+}
+h1{
+   color : black;
+   font-weight:400;
+ }
+
+}
+</style>
+
+    <table class="bor_ctd" >
+    	<thead>
+    		<tr>
+    			<th class="ctd" style="background-color :#1c92ff">Currency Name</th>
+    			<th class="ctd" style="background-color :#1c92ff">Currency Code</th>
+                <th class="ctd" style="background-color :#1c92ff">Cash</th>
+                <th class="ctd" style="background-color :#1c92ff">Transfer</th>
+                <th class="ctd" style="background-color :#1c92ff">Selling Rates</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+        <?php
+		 $dataExrate = $array[Exrate];
+		 for($index = 0; $index < count($dataExrate); $index++) {
+			 foreach ($dataExrate[$index] as $data) {
+				echo '<tr class="highlighter">';
+				echo '<td>'.$data[CurrencyName]. '</td>';
+				echo '<td>'.$data[CurrencyCode]. '</td>';
+				echo '<td>'.$data[Buy]. '</td>';
+				echo '<td>'.$data[Transfer]. '</td>';
+				echo '<td>'.$data[Sell]. '</td>';
+				echo '</tr>';
+			 }
+		 }
+?>
+    	</tbody>
+    </table>
+	<style>
+	.highlighter:hover {
+    background: #b6dcff;	
+ }
+	</style>
+<br> 
+<?php
+
+
+ 
