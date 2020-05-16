@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="MeShop_Tintuc::css/flex.css" />
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <container name="some.container" as="someContainer" label="Some Container" htmlTag="div" htmlClass="some-container" before="-">                   
+                <block class="News\tintuc\Block\News" name="News_tintuc_index" template="MeShop_Tintuc::news.phtml" />      
+                <block class="News\tintuc\Block\News" name="Whats_News_tintuc_index" template="MeShop_Tintuc::whats_news.phtml" />                     
+            </container>
+        </referenceContainer>
+    </body>
+</page>

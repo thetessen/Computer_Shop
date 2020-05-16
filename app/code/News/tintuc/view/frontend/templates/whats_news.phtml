@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">  
+    <title>News</title>
+  <style>
+   h1{
+   color : black;
+   font-weight:400;
+ } 
+  h2{
+   color : black;
+   font-weight:400;
+  } 
+  a.feed_title{
+  text-decoration: none;
+  }
+  a.more{
+  text-decoration: none;
+  }
+  </style>
+</head>
+<body>
+<div class="content">
+
+ 
+ <?php
+
+ $url = "https://vnexpress.net/rss/startup.rss";
+ 
+
+ $invalidurl = false;
+ if(@simplexml_load_file($url)){
+  $feeds = simplexml_load_file($url);
+ }else{
+  $invalidurl = true;
+  echo "<h2>Invalid RSS feed URL.</h2>";
+ }
+
+
+ $i=0;
+ if(!empty($feeds)){
+
+  $site = $feeds->channel->title;
+  
+
+  echo "<h1 >"."Tin tức luộc từ VnExpress"."</h1>";
+  foreach ($feeds->channel->item as $item) {
+
+   $title = $item->title;
+   $link = $item->link;
+   $description = $item->description;
+   $found = preg_match("/img src=\"([^\"]+)\"/", $description, $match);
+   $postDate = $item->pubDate;
+   $pubDate = date('D, d M Y',strtotime($postDate));
+
+   if($i>=15) break;
+  ?>
+   <div class="post" >
+     <div class="post-head">
+       <h2 style="width : 6500px;"><a target="_blank" class="feed_title" href="<?php echo $link; ?>"><?php echo $title; ?></a></h2>
+       <span><?php echo $pubDate; ?></span>
+     </div>
+     <div class="post-conten" style="width : 650px;">   
+       <?php echo "<a target=\"_blank\" href = $link><img width = 650px src=".$match[1];"</a>" ?> <br>
+       <?php echo preg_replace("/img src=\"([^\"]+)\"/", 'img src=',  $description); ?>
+       <a target="_blank" class="more" href="<?php echo $link; ?>">Đọc thêm</a>
+     </div>
+   </div>
+   <?php
+    $i++;
+   }
+ }else{
+   if(!$invalidurl){
+     echo "<h2>No item found</h2>";
+   }
+ }
+ ?>
+</div>
+</body>
+</html>

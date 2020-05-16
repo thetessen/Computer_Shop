@@ -261,6 +261,8 @@ return [
         'MSP_TwoFactorAuth' => 1,
         'Mageplaza_HelloWorld' => 1,
         'MeShop_Chatbox' => 1,
+        'MeShop_Thoitiet' => 1,
+        'MeShop_Tintuc' => 1,
         'Temando_Shipping' => 1,
         'Vertex_Tax' => 1,
         'Vertex_AddressValidation' => 1,
