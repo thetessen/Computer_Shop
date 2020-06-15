@@ -108,7 +108,7 @@ class Pay extends \Magento\Framework\App\Action\Action
     }
 
     /**
-    * Retrieve the response description
+    .* Retrieve the response description
      *
      * @param string $responseCode
      * @return string
